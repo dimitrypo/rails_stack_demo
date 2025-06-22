@@ -24,7 +24,7 @@ docker-compose up
 
 ## Development
 
-All commands run inside Docker containers:
+Various usable commands that you may use:
 
 ```bash
 # Rails console
@@ -36,27 +36,32 @@ docker-compose exec web rails db:migrate
 # Install gems
 docker-compose exec web bundle install
 
+# Build TailwindCSS for styling
+docker-compose exec web rails tailwindcss:build
+
+# Watch TailwindCSS for development (auto-rebuild on changes)
+docker-compose exec web rails tailwindcss:watch
+
 # Run tests
 docker-compose run --rm test
 ```
 
 ## Features
 
-- User authentication with Devise
-- Article CRUD with live updates
-- Global search with Elasticsearch
-- Background email jobs
-- Admin panel with ActiveAdmin
-- 2FA support (TOTP)
+- User authentication with Devise (TODO)
+- Article CRUD with live updates (TODO)
+- Global search with Elasticsearch (TODO)
+- Background email jobs (TODO)
+- Admin panel with ActiveAdmin (TODO)
+- 2FA support (TOTP) (TODO)
 
 ## Deployment
 
-Ready for AWS Lightsail Container Service (~$7/month).
-Terraform scripts included for production setup.
+Ready for AWS Lightsail Container Service. (TODO)
+Terraform scripts included for production setup. (TODO)
 
 ## Development Notes
 
-- Never run Ruby commands outside Docker
-- Use `docker-compose exec` for all Rails tasks
+- Use `docker-compose exec` for all Rails tasks inside docker container, you mainly will need "web" one.
 - Database auto-creates on first startup
 - All services health-checked before Rails starts
