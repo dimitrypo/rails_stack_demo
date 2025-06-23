@@ -42,8 +42,70 @@ docker-compose exec web rails tailwindcss:build
 # Watch TailwindCSS for development (auto-rebuild on changes)
 docker-compose exec web rails tailwindcss:watch
 
-# Run tests
-docker-compose run --rm test
+## Testing
+
+This project includes comprehensive testing using RSpec:
+
+### Testing Stack
+- **RSpec** - Behavior-driven testing framework
+- **Capybara** - Web application testing framework
+- **Selenium WebDriver** - Browser automation
+- **Firefox + Geckodriver** - Headless browser for actual rendering
+- **Docker** - Isolated testing environment
+
+### Test Types
+- **Controller Tests** - Test Rails controllers and HTTP responses
+- **Feature Tests** - End-to-end browser-based testing with Capybara
+
+# Run all RSpec tests (inside container)
+./bin/run-tests
+
+# Or manually run it inside container
+docker-compose run --rm test-runner bundle exec rspec
+
+# Run specific test files
+docker-compose run --rm test-runner bundle exec rspec spec/controllers/public_controller_spec.rb
+docker-compose run --rm test-runner bundle exec rspec spec/features/home_pages_spec.rb
+```
+
+### Running Tests
+```bash
+# Run all system tests in dedicated container
+./bin/run-tests
+
+# Interactive mode for debugging
+docker-compose run --rm test-runner bash
+bundle exec rspec --format documentation
+```
+
+The `./bin/run-tests` script runs all RSpec tests inside a dedicated Docker container with all necessary dependencies pre-installed.
+
+### Browser Configuration
+Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on machines with different architectures. This ensures consistent test execution across development and CI environments.
+
+### Test Coverage
+The test suite verifies:
+
+**Controller Tests:**
+- HTTP response codes and status
+- Template rendering
+- Request/response handling
+- Controller inheritance and setup
+
+**Feature Tests:**
+- Page rendering and content display
+- TailwindCSS styling and responsive behavior
+- User interactions and navigation
+- JavaScript functionality via Stimulus
+- Form submissions and validations
+- Error handling and edge cases
+
+### Features
+- **Containerized Testing**: All tests run in isolated Docker containers
+- **Screenshot Capture**: Automatic screenshots on test failures for debugging
+- **Responsive Testing**: Validates TailwindCSS responsive design behaviors
+- **Content Verification**: Tests all page sections, interactions, and styling
+- **Cross-platform**: Consistent testing environment across different systems
 ```
 
 ## Features

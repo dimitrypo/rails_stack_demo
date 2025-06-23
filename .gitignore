@@ -2,6 +2,10 @@
 node_modules/
 vendor/
 
+# Bundle gems
+vendor/bundle/
+.bundle
+
 # Environment variables
 .env
 .env.local
@@ -48,6 +52,8 @@ jspm_packages/
 *.swp
 *.swo
 *~
+./bundle/*
+./bundle
 
 # OS generated files
 .DS_Store

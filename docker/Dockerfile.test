@@ -1,0 +1,56 @@
+# Use the same base image as main Dockerfile for consistency
+FROM ruby:3.4.4-slim
+
+# Install system dependencies including Firefox and geckodriver
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
+      libyaml-dev \
+      nodejs \
+      npm \
+      git \
+      curl \
+      wget \
+      firefox-esr \
+      xvfb \
+      && rm -rf /var/lib/apt/lists/*
+
+# Install geckodriver for ARM64 or AMD64
+RUN ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "arm64" ]; then \
+      GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux-aarch64.tar.gz"; \
+    else \
+      GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz"; \
+    fi && \
+    wget -O geckodriver.tar.gz "$GECKODRIVER_URL" && \
+    tar -xzf geckodriver.tar.gz && \
+    chmod +x geckodriver && \
+    mv geckodriver /usr/local/bin/ && \
+    rm geckodriver.tar.gz
+
+# Set up working directory
+WORKDIR /rails
+
+# Install gems first to leverage Docker caching
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set --local path 'vendor/bundle' && \
+    bundle install
+
+# Copy the rest of the application code
+COPY . .
+
+# Create testuser and set up directories
+RUN adduser --disabled-password --gecos '' testuser
+
+# Set permissions for the entire app directory
+RUN chown -R testuser:testuser /rails
+
+# Ensure Firefox can run in headless mode
+ENV DISPLAY=:99
+
+# Switch to testuser for running tests
+USER testuser
+
+# Default command for running tests
+CMD ["./bin/run-tests"]

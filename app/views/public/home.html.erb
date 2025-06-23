@@ -2,8 +2,8 @@
   <!-- Hero Section -->
   <div class="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 mb-8 text-white">
     <div class="max-w-4xl">
-      <h1 class="text-5xl font-bold mb-4">Welcome to Rails Stack Demo</h1>
-      <p class="text-xl mb-6 text-blue-100">
+      <h1 class="text-3xl md:text-5xl font-bold mb-4">Welcome to Rails Stack Demo</h1>
+      <p class="text-lg md:text-xl mb-6 text-blue-100">
         A modern Rails 7 application featuring TailwindCSS, Docker, and all the latest tools. 
         This is your starting point for building amazing web applications.
       </p>
@@ -12,34 +12,34 @@
 
   <!-- Features Grid -->
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
       <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
         </svg>
       </div>
       <h3 class="text-lg font-semibold text-gray-900 mb-2">Lightning Fast</h3>
-      <p class="text-gray-600">Built with Rails 7, Turbo, and Stimulus for blazing fast performance and seamless user experience.</p>
+      <p class="text-gray-600">Built with Rails 7 and modern best practices</p>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
       <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
         </svg>
       </div>
       <h3 class="text-lg font-semibold text-gray-900 mb-2">Modern Design</h3>
-      <p class="text-gray-600">Beautiful, responsive UI powered by TailwindCSS with carefully crafted components and layouts.</p>
+      <p class="text-gray-600">Beautiful, responsive design with TailwindCSS</p>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
       <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
         </svg>
       </div>
       <h3 class="text-lg font-semibold text-gray-900 mb-2">Docker Ready</h3>
-      <p class="text-gray-600">Fully containerized development environment for consistent builds and easy deployment.</p>
+      <p class="text-gray-600">Fully containerized with Docker for easy development</p>
     </div>
   </div>
 
@@ -98,23 +98,14 @@
           </span>
         </div>
       </div>
-      
       <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Development Guide</h3>
-        <div class="space-y-3 text-sm text-gray-600">
-          <div class="flex items-start">
-            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-              <span class="text-blue-600 text-xs font-bold">1</span>
-            </div>
-            <p><strong>Start Docker:</strong> <code class="bg-gray-200 px-2 py-1 rounded text-xs">docker-compose up -d</code></p>
-          </div>
-          <div class="flex items-start">
-            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-              <span class="text-blue-600 text-xs font-bold">2</span>
-            </div>
-            <p><strong>Access App:</strong> Visit <a href="http://localhost:8000" class="text-blue-600 hover:underline">http://localhost:8000</a></p>
-          </div>
-        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Quick Development Guide</h2>
+        <p class="text-gray-600 mb-4">Start Docker:</p>
+        <pre class="bg-gray-800 text-green-400 p-4 rounded-lg"><code>docker-compose up -d</code></pre>
+        <p class="text-gray-600 mt-4 mb-2">Run Rails console:</p>
+        <pre class="bg-gray-800 text-green-400 p-4 rounded-lg"><code>docker-compose exec web rails console</code></pre>
+        <p class="text-gray-600 mt-4 mb-2">Run database migrations:</p>
+        <pre class="bg-gray-800 text-green-400 p-4 rounded-lg"><code>docker-compose exec web rails db:migrate</code></pre>
       </div>
     </div>
   </div>

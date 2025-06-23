@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Script to run all RSpec tests in Docker
+# To force a full rebuild without cache and pull the latest base images, run:
+# docker-compose build --no-cache --pull test-runner
+
+set -e
+
+echo "🔧 Setting up RSpec tests..."
+
+echo "🧪 Running RSpec tests..."
+docker-compose run --rm --no-deps test-runner \
+  bash -c "bundle exec rails db:prepare RAILS_ENV=test && bundle exec rspec --format documentation"
+
+# Show results
+echo "✅ RSpec tests completed!"
