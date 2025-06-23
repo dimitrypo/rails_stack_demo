@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Brakeman security scanner for Docker environment
+# Usage: ./bin/brakeman-check [options]
+
+set -e
+
+echo "🛡️  Running Brakeman security scan..."
+
+# Default to standard output, pass through any arguments
+docker-compose exec web bundle exec brakeman "$@"
+
+echo ""
+echo "✅ Brakeman scan completed!"

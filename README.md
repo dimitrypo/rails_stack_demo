@@ -45,8 +45,11 @@ docker-compose exec web rails tailwindcss:watch
 # Check code style with RuboCop
 ./bin/rubocop-check
 
-# Auto-fix RuboCop violations
+# Auto-fix code style issues
 ./bin/rubocop-check --fix
+
+# Run security scan
+./bin/brakeman-check
 ```
 
 ## Testing
@@ -87,6 +90,18 @@ bundle exec rspec --format documentation
 
 The `./bin/run-tests` script runs all RSpec tests inside a dedicated Docker container with all necessary dependencies pre-installed.
 
+### Manual Docker Commands examples
+```bash
+# RuboCop
+docker-compose exec web bundle exec rubocop
+docker-compose exec web bundle exec rubocop --autocorrect
+
+# Brakeman
+docker-compose exec web bundle exec brakeman
+docker-compose exec web bundle exec brakeman -o brakeman_report.html
+docker-compose exec web bundle exec brakeman --ignore-config .brakeman.ignore
+```
+
 ### Browser Configuration
 Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on machines with different architectures. This ensures consistent test execution across development and CI environments.
 
@@ -99,34 +114,20 @@ Firefox with Geckodriver was chosen for feature testing due to its superior comp
 
 ## Code Quality
 
-This project enforces code quality using RuboCop with Rails Omakase configuration:
+This project enforces code quality and security using RuboCop and Brakeman:
 
-### RuboCop Setup
-- **RuboCop Rails Omakase** - Curated Ruby style guide for Rails applications
-- **Pre-commit Hook** - Automatically runs on every commit to prevent style violations
-- **Auto-correction** - Many issues can be fixed automatically
-
-### Running RuboCop
-```bash
-# Check code style (manual run)
-./bin/rubocop-check
-
-# Auto-fix safe violations
-./bin/rubocop-check --safe-fix
-
-# Auto-fix all violations (be careful!)
-./bin/rubocop-check --fix
-
-# Run inside Docker container directly
-docker-compose exec web bundle exec rubocop
-docker-compose exec web bundle exec rubocop --autocorrect
-```
+### Tools Setup
+- **RuboCop Rails Omakase** - Curated Ruby style guide for Rails applications  
+- **Brakeman** - Static security vulnerability scanner for Rails
+- **Pre-commit Hook** - Automatically runs both tools on every commit
+- **Auto-correction** - Many RuboCop issues can be fixed automatically
 
 ### Pre-commit Hook
 The project includes an automatic pre-commit hook that:
 - Runs RuboCop on every commit attempt
-- Prevents commits with style violations
-- Shows helpful commands to fix issues
+- Runs Brakeman security scan on every commit  
+- Prevents commits with style violations or security issues
+- Shows helpful commands to fix problems
 - Works with Docker environment automatically
 
 If you need to bypass the hook (emergency only):
