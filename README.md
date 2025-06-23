@@ -42,6 +42,13 @@ docker-compose exec web rails tailwindcss:build
 # Watch TailwindCSS for development (auto-rebuild on changes)
 docker-compose exec web rails tailwindcss:watch
 
+# Check code style with RuboCop
+./bin/rubocop-check
+
+# Auto-fix RuboCop violations
+./bin/rubocop-check --fix
+```
+
 ## Testing
 
 This project includes comprehensive testing using RSpec:
@@ -66,7 +73,7 @@ docker-compose run --rm test-runner bundle exec rspec
 # Run specific test files
 docker-compose run --rm test-runner bundle exec rspec spec/controllers/public_controller_spec.rb
 docker-compose run --rm test-runner bundle exec rspec spec/features/home_pages_spec.rb
-```
+
 
 ### Running Tests
 ```bash
@@ -83,29 +90,49 @@ The `./bin/run-tests` script runs all RSpec tests inside a dedicated Docker cont
 ### Browser Configuration
 Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on machines with different architectures. This ensures consistent test execution across development and CI environments.
 
-### Test Coverage
-The test suite verifies:
-
-**Controller Tests:**
-- HTTP response codes and status
-- Template rendering
-- Request/response handling
-- Controller inheritance and setup
-
-**Feature Tests:**
-- Page rendering and content display
-- TailwindCSS styling and responsive behavior
-- User interactions and navigation
-- JavaScript functionality via Stimulus
-- Form submissions and validations
-- Error handling and edge cases
-
 ### Features
 - **Containerized Testing**: All tests run in isolated Docker containers
 - **Screenshot Capture**: Automatic screenshots on test failures for debugging
 - **Responsive Testing**: Validates TailwindCSS responsive design behaviors
 - **Content Verification**: Tests all page sections, interactions, and styling
 - **Cross-platform**: Consistent testing environment across different systems
+
+## Code Quality
+
+This project enforces code quality using RuboCop with Rails Omakase configuration:
+
+### RuboCop Setup
+- **RuboCop Rails Omakase** - Curated Ruby style guide for Rails applications
+- **Pre-commit Hook** - Automatically runs on every commit to prevent style violations
+- **Auto-correction** - Many issues can be fixed automatically
+
+### Running RuboCop
+```bash
+# Check code style (manual run)
+./bin/rubocop-check
+
+# Auto-fix safe violations
+./bin/rubocop-check --safe-fix
+
+# Auto-fix all violations (be careful!)
+./bin/rubocop-check --fix
+
+# Run inside Docker container directly
+docker-compose exec web bundle exec rubocop
+docker-compose exec web bundle exec rubocop --autocorrect
+```
+
+### Pre-commit Hook
+The project includes an automatic pre-commit hook that:
+- Runs RuboCop on every commit attempt
+- Prevents commits with style violations
+- Shows helpful commands to fix issues
+- Works with Docker environment automatically
+
+If you need to bypass the hook (emergency only):
+```bash
+git commit --no-verify -m "Emergency commit"
+```
 ```
 
 ## Features
