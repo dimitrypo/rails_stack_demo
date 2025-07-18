@@ -12,6 +12,30 @@ Modern Rails 7 starter kit with Docker. Demo project showcasing my skills and pr
 - **TailwindCSS** for styling
 - **Turbo/Stimulus** for frontend
 
+## Features
+
+### Current Features
+- **User Authentication**: Devise-based login-only system (no registration for safety)
+- **Comprehensive Testing**: 100% code coverage with RSpec, Capybara, and Docker
+- **Code Quality**: Automated RuboCop and Brakeman checks with pre-commit hooks
+- **Modern UI**: TailwindCSS with Turbo/Stimulus for responsive design
+
+### Planned Features (TODO)
+- Article CRUD with live updates
+- Global search with Elasticsearch
+- Background email jobs with Sidekiq
+- Admin panel with ActiveAdmin
+- 2FA support (TOTP)
+
+### Authentication
+
+Simple login-only authentication with Devise (no registration, password reset, or other features - just as a safety precaution if it'll be deployed somewhere to not invite bots, and also demos my skills to customize Devise):
+- Email: `user@example.com`
+- Password: `password`
+
+A default user is automatically created on startup in development mode. The login page features a modern TailwindCSS design with the app branding.
+
+
 ## Quick Start
 
 ```bash
@@ -115,7 +139,7 @@ Firefox with Geckodriver was chosen for feature testing due to its superior comp
 This project enforces code quality and security using RuboCop and Brakeman:
 
 ### Tools Setup
-- **RuboCop Rails Omakase** - Curated Ruby style guide for Rails applications  
+- **RuboCop** - Curated Ruby style guide for Rails applications  
 - **Brakeman** - Static security vulnerability scanner for Rails
 - **Pre-commit Hook** - Automatically runs both tools on every commit
 - **Auto-correction** - Many RuboCop issues can be fixed automatically
@@ -132,34 +156,6 @@ If you need to bypass the hook (emergency only):
 ```bash
 git commit --no-verify -m "Emergency commit"
 ```
-
-## Features
-
-### Current Features
-- **User Authentication**: Devise-based login-only system (no registration for safety)
-- **Comprehensive Testing**: 100% code coverage with RSpec, Capybara, and Docker
-- **Code Quality**: Automated RuboCop and Brakeman checks with pre-commit hooks
-- **Modern UI**: TailwindCSS with Turbo/Stimulus for responsive design
-
-### Planned Features (TODO)
-- Article CRUD with live updates
-- Global search with Elasticsearch
-- Background email jobs with Sidekiq
-- Admin panel with ActiveAdmin
-- 2FA support (TOTP)
-
-### Authentication
-
-Simple login-only authentication with Devise (no registration, password reset, or other features - just as a safety precaution if it'll be deployed somewhere to not invite bots, and also demos my skills to customize Devise):
-- Email: `user@example.com`
-- Password: `password`
-
-A default user is automatically created on startup in development mode. The login page features a modern TailwindCSS design with the app branding.
-
-## Deployment
-
-Ready for AWS Lightsail Container Service. (TODO)
-Terraform scripts included for production setup. (TODO)
 
 ## Development Notes
 
