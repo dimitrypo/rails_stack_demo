@@ -138,12 +138,20 @@ git commit --no-verify -m "Emergency commit"
 
 ## Features
 
-- User authentication with Devise (TODO)
+- User authentication with Devise (login-only, no registration - just for safety if someone will deploy it so won't be spammed by bots)
 - Article CRUD with live updates (TODO)
 - Global search with Elasticsearch (TODO)
 - Background email jobs (TODO)
 - Admin panel with ActiveAdmin (TODO)
 - 2FA support (TOTP) (TODO)
+
+### Authentication
+
+Simple login-only authentication with Devise (no registration, password reset, or other features - just as a safety precaution if it'll be deployed somewhere to not invite bots, and also demos my skills to customize Devise):
+- Email: `user@example.com`
+- Password: `password`
+
+A default user is automatically created on startup in development mode. The login page features a modern TailwindCSS design with the app branding.
 
 ## Deployment
 
