@@ -63,9 +63,6 @@ This project includes comprehensive testing using RSpec:
 - **Firefox + Geckodriver** - Headless browser for actual rendering
 - **Docker** - Isolated testing environment
 
-### Test Types
-- **Controller Tests** - Test Rails controllers and HTTP responses
-- **Feature Tests** - End-to-end browser-based testing with Capybara
 
 # Run all RSpec tests (inside container)
 ./bin/run-tests
@@ -103,14 +100,15 @@ docker-compose exec web bundle exec brakeman --ignore-config .brakeman.ignore
 ```
 
 ### Browser Configuration
-Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on machines with different architectures. This ensures consistent test execution across development and CI environments.
+Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on Apple Silicone machines. This ensures consistent test execution across development and CI environments.
 
-### Features
+### Testing Features
 - **Containerized Testing**: All tests run in isolated Docker containers
 - **Screenshot Capture**: Automatic screenshots on test failures for debugging
 - **Responsive Testing**: Validates TailwindCSS responsive design behaviors
 - **Content Verification**: Tests all page sections, interactions, and styling
 - **Cross-platform**: Consistent testing environment across different systems
+- **100% Code Coverage**: Complete test coverage with SimpleCov reporting
 
 ## Code Quality
 
@@ -134,16 +132,21 @@ If you need to bypass the hook (emergency only):
 ```bash
 git commit --no-verify -m "Emergency commit"
 ```
-```
 
 ## Features
 
-- User authentication with Devise (login-only, no registration - just for safety if someone will deploy it so won't be spammed by bots)
-- Article CRUD with live updates (TODO)
-- Global search with Elasticsearch (TODO)
-- Background email jobs (TODO)
-- Admin panel with ActiveAdmin (TODO)
-- 2FA support (TOTP) (TODO)
+### Current Features
+- **User Authentication**: Devise-based login-only system (no registration for safety)
+- **Comprehensive Testing**: 100% code coverage with RSpec, Capybara, and Docker
+- **Code Quality**: Automated RuboCop and Brakeman checks with pre-commit hooks
+- **Modern UI**: TailwindCSS with Turbo/Stimulus for responsive design
+
+### Planned Features (TODO)
+- Article CRUD with live updates
+- Global search with Elasticsearch
+- Background email jobs with Sidekiq
+- Admin panel with ActiveAdmin
+- 2FA support (TOTP)
 
 ### Authentication
 
