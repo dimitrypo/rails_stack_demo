@@ -75,4 +75,8 @@ RSpec.configure do |config|
   Capybara.default_driver = :rack_test
   Capybara.javascript_driver = :headless_firefox
   Capybara.default_max_wait_time = 5
+
+  # Include Devise helpers
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include FactoryBot::Syntax::Methods
 end
