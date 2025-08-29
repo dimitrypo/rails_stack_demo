@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: rails_starter_development
+      POSTGRES_DB: rails_stack_demo_development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
@@ -59,39 +59,18 @@ services:
       - .:/app
       - bundle_cache:/usr/local/bundle
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/rails_starter_development
+      - DATABASE_URL=postgresql://postgres:password@db:5432/rails_stack_demo_development
       - REDIS_URL=redis://redis:6379/0
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RAILS_ENV=development
     depends_on:
       db:
-        condition: service_healthy
-      redis:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
     stdin_open: true
     tty: true
-    command: sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0"
-
-  sidekiq:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-    volumes:
-      - .:/app
-      - bundle_cache:/usr/local/bundle
-    environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/rails_starter_development
-      - REDIS_URL=redis://redis:6379/0
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - RAILS_ENV=development
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    command: bundle exec sidekiq
+    command: /app/docker/entrypoint.sh
 
   test-runner:
     build:
@@ -101,7 +80,7 @@ services:
       - .:/rails
       - test_bundle_cache:/rails/vendor/bundle
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/rails_starter_test
+      - DATABASE_URL=postgresql://postgres:password@db:5432/rails_stack_demo_test
       - REDIS_URL=redis://redis:6379/1
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RAILS_ENV=test

@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_18_091942) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_172234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.bigint "author_id", null: false
+    t.boolean "published", default: false, null: false
+    t.string "slug"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_articles_on_author_id"
+    t.index ["published"], name: "index_articles_on_published"
+    t.index ["published_at"], name: "index_articles_on_published_at"
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,4 +37,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_18_091942) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "articles", "users", column: "author_id"
 end

@@ -1,0 +1,9 @@
+<% if @from_show %>
+	<turbo-stream action="replace" target="page-content">
+		<template>
+			<%= render partial: 'articles/index', formats: [:html], locals: { articles: @articles } %>
+		</template>
+	</turbo-stream>
+<% else %>
+	<turbo-stream action="remove" target="<%= dom_id(@article) %>"></turbo-stream>
+<% end %>

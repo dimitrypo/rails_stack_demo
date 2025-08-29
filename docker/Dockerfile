@@ -23,6 +23,10 @@ RUN bundle install
 # Copy app files
 COPY . .
 
+# Copy and make entrypoint executable
+COPY docker/entrypoint.sh /app/docker/entrypoint.sh
+RUN chmod +x /app/docker/entrypoint.sh
+
 # Precompile assets (will be overridden in development)
 RUN bundle exec rails assets:precompile RAILS_ENV=production || true
 
