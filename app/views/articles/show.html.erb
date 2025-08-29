@@ -1,0 +1,54 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <%= turbo_frame_tag dom_id(@article) do %>
+    <article class="bg-white rounded-lg shadow-lg p-8">
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <% unless @article.published? %>
+              <span class="px-3 py-1 mr-2 text-sm font-semibold text-yellow-800 bg-yellow-100 rounded-full">Draft</span>
+            <% end %>
+            <span class="text-gray-500">
+              By <span class="font-medium"><%= @article.author.email.split('@').first %></span>
+            </span>
+            <span class="text-gray-500">•</span>
+            <time class="text-gray-500">
+              <%= @article.published_at ? @article.published_at.strftime("%B %d, %Y") : "Not published" %>
+            </time>
+          </div>
+          
+          <% if user_signed_in? && @article.author == current_user %>
+            <div class="flex space-x-2">
+              <%= link_to "Edit", edit_article_path(@article), 
+                          class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50",
+                          data: { turbo_frame: "_top" } %>
+              <%= link_to "Delete", article_path(@article, from: 'show'), 
+                          data: { 
+                            turbo_method: :delete, 
+                            turbo_confirm: "Are you sure you want to delete this article?" 
+                          },
+                          class: "px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700" %>
+            </div>
+          <% end %>
+        </div>
+        
+        <h1 class="text-4xl font-bold text-gray-900 mb-6"><%= @article.title %></h1>
+      </div>
+
+      <div class="prose prose-lg max-w-none">
+        <%= simple_format(@article.content, class: "text-gray-700 leading-relaxed") %>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-gray-200">
+        <div class="flex justify-between items-center">
+          <%= link_to "← Back to Articles", articles_path, 
+                      class: "text-blue-600 hover:text-blue-800 font-medium",
+                      data: { turbo_frame: "_top" } %>
+          
+          <div class="text-sm text-gray-500">
+            Last updated <%= time_ago_in_words(@article.updated_at) %> ago
+          </div>
+        </div>
+      </div>
+    </article>
+  <% end %>
+</div>

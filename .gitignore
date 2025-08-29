@@ -55,6 +55,8 @@ jspm_packages/
 ./bundle/*
 ./bundle
 
+.playwright-mcp
+
 # OS generated files
 .DS_Store
 .DS_Store?

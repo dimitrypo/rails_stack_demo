@@ -19,9 +19,9 @@ Modern Rails 7 starter kit with Docker. Demo project showcasing my skills and pr
 - **Comprehensive Testing**: 100% code coverage with RSpec, Capybara, and Docker
 - **Code Quality**: Automated RuboCop and Brakeman checks with pre-commit hooks
 - **Modern UI**: TailwindCSS with Turbo/Stimulus for responsive design
+- **Articles**: Full CRUD with Turbo Streams. Draft/publish workflow, per-author edit/delete permissions, SEO-friendly slugs, and paginated index. Rich Tailwind UI with inline updates (no full page reloads).
 
 ### Planned Features (TODO)
-- Article CRUD with live updates
 - Global search with Elasticsearch
 - Background email jobs with Sidekiq
 - Admin panel with ActiveAdmin
@@ -88,6 +88,7 @@ This project includes comprehensive testing using RSpec:
 - **Docker** - Isolated testing environment
 
 
+```bash
 # Run all RSpec tests (inside container)
 ./bin/run-tests
 
@@ -97,6 +98,7 @@ docker-compose run --rm test-runner bundle exec rspec
 # Run specific test files
 docker-compose run --rm test-runner bundle exec rspec spec/controllers/public_controller_spec.rb
 docker-compose run --rm test-runner bundle exec rspec spec/features/home_pages_spec.rb
+```
 
 
 ### Running Tests
@@ -124,7 +126,7 @@ docker-compose exec web bundle exec brakeman --ignore-config .brakeman.ignore
 ```
 
 ### Browser Configuration
-Firefox with Geckodriver was chosen for feature testing due to its superior compatibility with Docker environments, particularly when running on Apple Silicone machines. This ensures consistent test execution across development and CI environments.
+Firefox with Geckodriver was chosen for feature testing due to its compatibility with Docker environments, particularly on Apple Silicon machines. This ensures consistent test execution across development and CI environments.
 
 ### Testing Features
 - **Containerized Testing**: All tests run in isolated Docker containers

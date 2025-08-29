@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# RuboCop runner for Docker environment
+# Usage:
+#   ./bin/rubocop-check            # autocorrect staged Ruby files
+#   ./bin/rubocop-check -- [args]  # pass args to rubocop (e.g., -A, -a, --only ...)
+
+set -euo pipefail
+
+echo "🧹 Running RuboCop…"
+
+# Collect staged Ruby-ish files (common Ruby entrypoints included)
+STAGED_FILES=$(git diff --name-only --cached --diff-filter=ACM | \
+	grep -E '\.(rb|rake|gemspec)$|^(Gemfile|Rakefile|config\.ru)$|^bin/' || true)
+
+# Default args: aggressive autocorrect for enabled cops
+DEFAULT_ARGS=(-A --force-exclusion)
+
+# If the user passes "--" then everything after goes to RuboCop
+USER_ARGS=()
+PASSTHRU=false
+for arg in "$@"; do
+	if [ "$arg" = "--" ]; then
+		PASSTHRU=true
+		continue
+	fi
+	if [ "$PASSTHRU" = true ]; then
+		USER_ARGS+=("$arg")
+	fi
+done
+
+if [ ${#USER_ARGS[@]} -eq 0 ]; then
+	ARGS=("${DEFAULT_ARGS[@]}")
+else
+	ARGS=("${USER_ARGS[@]}")
+fi
+
+# Prefer exec into a running web container; fall back to one-off run
+run_rubocop() {
+	if docker compose ps --status running --services 2>/dev/null | grep -q '^web$'; then
+		docker compose exec -T web bin/rubocop "${ARGS[@]}" "$@"
+	else
+		docker compose run --rm -T web bin/rubocop "${ARGS[@]}" "$@"
+	fi
+}
+
+if [ -n "$STAGED_FILES" ]; then
+	echo "• Target: staged files"
+	# shellcheck disable=SC2086
+	run_rubocop $STAGED_FILES || true
+else
+	echo "• No staged Ruby files detected; scanning project root"
+	run_rubocop || true
+fi
+
+echo "✅ RuboCop run finished"
+

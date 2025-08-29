@@ -28,6 +28,9 @@ gem "sidekiq"
 # User authentication
 gem "devise"
 
+# Pagination
+gem "kaminari"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -68,6 +71,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rails-controller-testing"
+
+  # Matchers for testing
+  gem "shoulda-matchers"
 
   # Code coverage analysis
   gem "simplecov", require: false

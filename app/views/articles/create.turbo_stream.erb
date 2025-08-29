@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="page-content">
+  <template>
+    <%= render partial: 'articles/index', formats: [:html], locals: { articles: Article.recent.page(params[:page]) } %>
+  </template>
+</turbo-stream>
